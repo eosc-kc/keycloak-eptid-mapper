@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.keycloak</groupId>
-    <artifactId>keycloak-edupersonid-mapper</artifactId>
+    <artifactId>keycloak-eptid-mapper</artifactId>
     <version>1.0.0</version>
 
     <properties>

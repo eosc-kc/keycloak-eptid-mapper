@@ -65,14 +65,14 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
         property = new ProviderConfigProperty();
         property.setName(ATTRIBUTE_NAME);
         property.setLabel("Attribute Name");
-        property.setHelpText("Name of attribute to search for in assertion.  You can leave this blank and specify a friendly name instead. Default to urn:oid:1.3.6.1.4.1.5923.1.1.1.10 .");
+        property.setHelpText("Name of attribute to search for in assertion. Default to urn:oid:1.3.6.1.4.1.5923.1.1.1.10.");
         property.setType(ProviderConfigProperty.STRING_TYPE);
         property.setDefaultValue(ATTRIBUTE_NAME_DEFAULT);
         configProperties.add(property);
         property = new ProviderConfigProperty();
         property.setName(ATTRIBUTE_FRIENDLY_NAME);
         property.setLabel("Friendly Name");
-        property.setHelpText("Friendly name of attribute to search for in assertion.  You can leave this blank and specify a name instead. Default to eduPersonTargetedID.");
+        property.setHelpText("Friendly name of attribute to search for in assertion. Default to eduPersonTargetedID. Default to eduPersonTargetedID.");
         property.setType(ProviderConfigProperty.STRING_TYPE);
         property.setDefaultValue(ATTRIBUTE_FRIENDLY_NAME_DEFAULT);
         configProperties.add(property);
@@ -127,10 +127,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
 
     @Override
     public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
-        String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
-        if (StringUtil.isNullOrEmpty(attribute)) {
-            return;
-        }
+        String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE) != null ? mapperModel.getConfig().get(USER_ATTRIBUTE) : USER_ATTRIBUTE_DEFAULT;
         String attributeName = getAttributeNameFromMapperModel(mapperModel);
 
         List<String> attributeValuesInContext = findAttributeValuesInContext(attributeName, context);
@@ -140,10 +137,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
     }
 
     private String getAttributeNameFromMapperModel(IdentityProviderMapperModel mapperModel) {
-        String attributeName = mapperModel.getConfig().get(ATTRIBUTE_NAME);
-        if (attributeName == null) {
-            attributeName = mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME);
-        }
+        String attributeName = mapperModel.getConfig().get(ATTRIBUTE_NAME)!= null ? mapperModel.getConfig().get(ATTRIBUTE_NAME) : ATTRIBUTE_NAME_DEFAULT;
         return attributeName;
     }
 
@@ -187,10 +181,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
 
     @Override
     public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
-        String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
-        if (StringUtil.isNullOrEmpty(attribute)) {
-            return;
-        }
+        String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE) != null ? mapperModel.getConfig().get(USER_ATTRIBUTE) : USER_ATTRIBUTE_DEFAULT;
         String attributeName = getAttributeNameFromMapperModel(mapperModel);
         List<String> attributeValuesInContext = findAttributeValuesInContext(attributeName, context);
 
@@ -215,8 +206,8 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
     // SamlMetadataDescriptorUpdater interface
     @Override
     public void updateMetadata(IdentityProviderMapperModel mapperModel, EntityDescriptorType entityDescriptor) {
-        String attributeName = mapperModel.getConfig().get(ATTRIBUTE_NAME);
-        String attributeFriendlyName = mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME);
+        String attributeName = mapperModel.getConfig().get(ATTRIBUTE_NAME)!= null ? mapperModel.getConfig().get(ATTRIBUTE_NAME) : ATTRIBUTE_NAME_DEFAULT;
+        String attributeFriendlyName = mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME)!= null ? mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME) : ATTRIBUTE_FRIENDLY_NAME_DEFAULT;
 
         RequestedAttributeType requestedAttribute = new RequestedAttributeType(attributeName);
         requestedAttribute.setIsRequired(null);
