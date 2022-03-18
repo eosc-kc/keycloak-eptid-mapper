@@ -57,6 +57,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
     protected static final String ATTRIBUTE_FRIENDLY_NAME = "attribute.friendly.name";
     protected static final String ATTRIBUTE_NAME_FORMAT = "attribute.name.format";
     protected static final String USER_ATTRIBUTE = "user.attribute";
+    public static final String IS_REQUIRED = "is.required";
     private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
 
     public static final List<String> NAME_FORMATS = Arrays.asList(JBossSAMLURIConstants.ATTRIBUTE_FORMAT_BASIC.name(), JBossSAMLURIConstants.ATTRIBUTE_FORMAT_URI.name(), JBossSAMLURIConstants.ATTRIBUTE_FORMAT_UNSPECIFIED.name());
@@ -90,6 +91,12 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
         property.setHelpText("User attribute name to store saml attribute. Default to eduPersonTargetedID.");
         property.setType(ProviderConfigProperty.STRING_TYPE);
         property.setDefaultValue(USER_ATTRIBUTE_DEFAULT);
+        configProperties.add(property);
+        property = new ProviderConfigProperty();
+        property.setName(IS_REQUIRED);
+        property.setLabel("isRequired");
+        property.setHelpText("Friendly name of attribute to search for in assertion.  You can leave this blank and specify a name instead.");
+        property.setType(ProviderConfigProperty.BOOLEAN_TYPE);
         configProperties.add(property);
     }
 
@@ -210,7 +217,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
         String attributeFriendlyName = mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME)!= null ? mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME) : ATTRIBUTE_FRIENDLY_NAME_DEFAULT;
 
         RequestedAttributeType requestedAttribute = new RequestedAttributeType(attributeName);
-        requestedAttribute.setIsRequired(null);
+        requestedAttribute.setIsRequired(Boolean.valueOf(mapperModel.getConfig().get(UserAttributeMapper.IS_REQUIRED)) ? true: null);
         requestedAttribute.setNameFormat(mapperModel.getConfig().get(ATTRIBUTE_NAME_FORMAT) != null ? JBossSAMLURIConstants.valueOf(mapperModel.getConfig().get(ATTRIBUTE_NAME_FORMAT)).get() :ATTRIBUTE_FORMAT_BASIC.get());
 
         if (attributeFriendlyName != null && attributeFriendlyName.length() > 0)
