@@ -217,7 +217,7 @@ public class EduPersonTargetedIDMapper extends AbstractIdentityProviderMapper im
         String attributeFriendlyName = mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME)!= null ? mapperModel.getConfig().get(ATTRIBUTE_FRIENDLY_NAME) : ATTRIBUTE_FRIENDLY_NAME_DEFAULT;
 
         RequestedAttributeType requestedAttribute = new RequestedAttributeType(attributeName);
-        requestedAttribute.setIsRequired(Boolean.valueOf(mapperModel.getConfig().get(UserAttributeMapper.IS_REQUIRED)) ? true: null);
+        requestedAttribute.setIsRequired(Boolean.valueOf(mapperModel.getConfig().get(IS_REQUIRED)) ? true: null);
         requestedAttribute.setNameFormat(mapperModel.getConfig().get(ATTRIBUTE_NAME_FORMAT) != null ? JBossSAMLURIConstants.valueOf(mapperModel.getConfig().get(ATTRIBUTE_NAME_FORMAT)).get() :ATTRIBUTE_FORMAT_BASIC.get());
 
         if (attributeFriendlyName != null && attributeFriendlyName.length() > 0)
