@@ -6,12 +6,12 @@
 
     <groupId>org.keycloak</groupId>
     <artifactId>keycloak-eptid-mapper</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
 
     <properties>
-        <keycloak.version>[16.1.0,)</keycloak.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <keycloak.version>[22.0.0,)</keycloak.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>

@@ -4,6 +4,8 @@ A pluggable IdP mapper for eduPersonTargetedID in keycloak. To be used in eosc i
 
 ## Installation instructions:
 
+Use version 1.1.0 for Keycloak version 22 and 1.0.1 for Keycloak version 18
+
 1. Compile the plugin jar i.e. 'mvn clean install' or just get a built one from the "Releases" link on the right sidebar.
 2. Drop the jar into the folder $KEYCLOAK_BASE/standalone/deployments/ and let all the hot-deploy magic commence.
 
